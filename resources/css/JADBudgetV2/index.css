@@ -1,0 +1,83 @@
+@tailwind base;
+@tailwind components;
+
+@layer base {
+    html {
+        @apply scroll-smooth ;
+    }
+
+    body {
+        @apply p-0 h-[100vh] ;
+        background-image: url('/storage/JADBudgetBackground.jpg');
+        background-size: cover;
+        background-attachment: fixed;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    button {
+        @apply bg-jadbudget-blue rounded-md shadow-md text-white px-2 py-1 transition-all my-2 flex flex-row items-center justify-center ;
+
+        &:hover {
+            @apply bg-white border-solid border-2 border-jadbudget-blue text-jadbudget-blue ;
+        }
+
+        img {
+            @apply mr-2 ;
+        }
+    }
+}
+
+@layer components {
+    .toast {
+        @apply w-fit h-fit bg-white rounded-md fixed bottom-[-300px] right-2 flex items-center justify-center z-[1000] py-1 pr-2 transition-all opacity-0 ;
+
+        > img {
+            @apply w-[24px] h-[24px] object-cover mx-1 mr-2 ;
+        }
+    }
+    
+    img {
+        @apply object-cover ;
+    }
+
+    .img-sm {
+        @apply w-[24px] ;
+    }
+
+    .img-md {
+        @apply w-[36px] ;
+    }
+
+    .img-lg {
+        @apply w-[48px] ;
+    }
+
+    .img-xlg {
+        @apply w-[64px] ;
+    }
+
+    #header {
+        @apply w-full p-1 py-2 flex flex-row items-center justify-center bg-jadbudget-blue text-4xl text-white font-bold ;
+
+        img {
+            @apply mr-4 ;
+        }
+    }
+
+    #loginContainer {
+        @apply w-full h-full flex flex-col items-center justify-center bg-black/50 ;
+    }
+
+    .box {
+        @apply bg-white rounded-md shadow-md p-2 flex flex-col items-center ;
+
+        h1 {
+            @apply text-2xl font-bold text-jadbudget-blue ;
+        }
+
+        input {
+            @apply border-[1px] border-gray-300 rounded-md my-2 p-1 w-full ;
+        }
+    }
+}
