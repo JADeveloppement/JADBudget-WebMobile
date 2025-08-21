@@ -63,7 +63,7 @@ Route::post('/JADBudgetV2/getUserInfos', function(){
 
 Route::post('/JADBudgetV2/signinV2', function(Request $r){
     return response()->json([
-        "login" => $login,
+        "login" => $r->login,
         "email" => $r->email,
         "password" => $r->password,
         "action" => "signin"

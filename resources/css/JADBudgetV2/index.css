@@ -26,6 +26,18 @@
             @apply mr-2 ;
         }
     }
+
+    .link span {
+        @apply text-jadbudget-blue ;
+    }
+
+    a {
+        @apply text-jadbudget-blue ;
+
+        &:hover {
+            @apply underline ;
+        }
+    }
 }
 
 @layer components {

@@ -1,6 +1,6 @@
 <template>
-    <BoxLogin title="Se connecter"></BoxLogin>
-    <!-- <BoxSignin title="S'inscrire"></BoxSignin> -->
+    <BoxLogin title="Se connecter" v-if="!toggleBoxes" @toggle-signin="toggleBox"></BoxLogin>
+    <BoxSignin title="S'inscrire" v-if="toggleBoxes" @toggle-signin="toggleBox"></BoxSignin>
 </template>
 
 <script>
@@ -12,12 +12,18 @@ export default {
         BoxLogin, BoxSignin
     },
     data(){
-        return [
-
-        ]
+        return {
+            toggleBoxes: false
+        };
     },
     mounted(){
 
+    },
+    methods: {
+        toggleBox(){
+            this.toggleBoxes = !this.toggleBoxes;
+            console.log(this.toggleBoxes);
+        }
     }
 }
 </script>
