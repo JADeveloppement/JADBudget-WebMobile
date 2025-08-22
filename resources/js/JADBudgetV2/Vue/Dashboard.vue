@@ -1,5 +1,5 @@
 <template>
-    <PannelLeft></PannelLeft>
+    <PannelLeft @dashboard-click="dashboardClicked" @profile-click="profileClicked"></PannelLeft>
     <PannelRight></PannelRight>
 </template>
 
@@ -20,7 +20,12 @@ export default{
     mounted() {
     },
     methods: {
-        
+        dashboardClicked(){
+            console.log('Dashboard.vue > dashboardClicked');
+        },
+        profileClicked(){
+            console.log('Dashboard.vue > profilClicked');
+        }
     }
 }
 </script>

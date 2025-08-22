@@ -5,11 +5,40 @@
         @apply w-full h-full flex flex-row ;
 
         .pannelLeft {
-            @apply w-1/5 h-full p-2 bg-white ;
+            @apply w-1/5 h-full p-2 bg-white transition-all ;
+
+            .menuLink {
+                @apply w-full p-1 my-2 rounded-md cursor-pointer transition-all flex flex-row ;
+
+                img {
+                    @apply mr-2 ;
+                }
+
+                &:hover {
+                    @apply bg-jadbudget-blue text-white ;
+                }
+            }
+
+            .active {
+                @apply font-bold text-jadbudget-blue ;
+            }
         }
 
         .pannelRight {
             @apply w-4/5 h-full p-2 ;
+        }
+
+        .pannelReduced {
+            @apply w-fit ;
+            > .menuLink {
+                p {
+                    @apply hidden ;
+                }
+            }
+
+            .welcomeDashboard {
+                @apply hidden ;
+            }
         }
     }
 }
