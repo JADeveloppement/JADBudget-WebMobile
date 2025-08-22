@@ -41,4 +41,8 @@
             }
         }
     }
+
+    .hidden {
+        @apply hidden;
+    }
 }

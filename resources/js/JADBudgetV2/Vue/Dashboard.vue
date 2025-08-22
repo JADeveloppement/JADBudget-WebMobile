@@ -1,6 +1,6 @@
 <template>
     <PannelLeft @dashboard-click="dashboardClicked" @profile-click="profileClicked"></PannelLeft>
-    <PannelRight></PannelRight>
+    <PannelRight :dashboardActive="dashboardSelected"></PannelRight>
 </template>
 
 <script>
@@ -15,6 +15,7 @@ export default{
     },
     data(){
         return {
+            dashboardSelected: true
         }
     },
     mounted() {
@@ -22,9 +23,11 @@ export default{
     methods: {
         dashboardClicked(){
             console.log('Dashboard.vue > dashboardClicked');
+            this.dashboardSelected = true;
         },
         profileClicked(){
             console.log('Dashboard.vue > profilClicked');
+            this.dashboardSelected = false;
         }
     }
 }
