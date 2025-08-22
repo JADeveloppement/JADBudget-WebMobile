@@ -14,7 +14,7 @@
             <a href="#" @click.prevent="$emit('toggle-signin')">Connectez-vous</a>
         </div>
 
-        <Button class="w-full" :class="{'loading-state': loading}" label="S'inscrire" @click="signin"></Button>
+        <Button class="w-full" :class="{'loading-state': loading}" label="S'inscrire" :disabled="loading" @click="signin"></Button>
 
     </div>
 </template>
@@ -83,24 +83,36 @@ export default {
     methods: {
         async signin() {
             this.loading = true;
+            
+            const data = {
+                _token: document.querySelector('meta[name=_token]').getAttribute('content'),
+                name: this.credentials.login,
+                email: this.credentials.email,
+                password: this.credentials.password
+            };
+
+            const url = '/JADBudgetV2/signinV2';
+
             try {
-                const result = await fetch_result('/JADBudgetV2/signinV2', {
-                    _token: document.querySelector('meta[name=_token]').getAttribute('content'),
-                    login: this.credentials.login,
-                    email: this.credentials.email,
-                    password: this.credentials.password
-                });
-    
-                switch(result.status){
-                    case 200:
-                        makeToast("success.png", "Inscription réussie !");
-                        break;
-                    default:
-                        makeToast("error.png", "Nous n'avons pas pu vous inscrire.");
-                }
+                await fetch_result(url, data);
+                makeToast("success.png", "Inscription réussie !");
+                
             } catch (error) {
-                console.error("Fetch failed:", error);
-                makeToast("error.png", "Une erreur est survenue. Veuillez réessayer.");
+                try {
+                    const errorResponse = JSON.parse(error.message);
+                    
+                    if (errorResponse.errors) {
+                        const firstError = Object.values(errorResponse.errors)[0][0];
+                        makeToast("error.png", firstError);
+                    } else {
+                        makeToast("error.png", "Une erreur est survenue. Veuillez réessayer.");
+                    }
+
+                } catch (parseError) {
+                    console.log(parseError);
+                    makeToast("error.png", "Une erreur est survenue. Veuillez réessayer.");
+                }
+                
             } finally {
                 this.loading = false;
             }

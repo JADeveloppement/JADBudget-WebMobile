@@ -46,13 +46,17 @@ function fetch_result(url, d): Promise<Response>{
     return fetch(url, {
         method: "POST",
         headers: {
-            "Content-type" : "application/json"
+            "Content-type" : "application/json",
+            "Accept": "application/json"
         },
         body: JSON.stringify(d)
     }).then(response => {
-        return response ;
-    }).catch(error => {
-        return error;
+        if (!response.ok) {
+            return response.json().then(errorData => {
+                throw new Error(JSON.stringify(errorData));
+            });
+        }
+        return response.json();
     });
 }
 

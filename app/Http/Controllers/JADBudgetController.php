@@ -9,44 +9,39 @@ use Illuminate\Support\Facades\Auth;
 
 use App\Models\User;
 use App\Models\Transaction;
+
 use App\Http\Requests\SigninRequest;
+use App\Http\Requests\LoginRequest;
 use App\Http\Requests\TransactionRequest;
 
 class JADBudgetController extends Controller {
 
     public function index(){
-        return view('JADBudget.index', [
-            'path' => (str_contains(env('APP_URL'), "localhost") ? "storage/" : "public/storage/")
-            // 'path' => 'storage/'
-        ]);
+        return view('JADBudgetV2.index');
     }
 
-    
     /**
      * TESTED
      */
-    public function login(Request $r){
+    public function login(LoginRequest $r){
         if (Auth::attempt(["name" => $r->login, "password" => $r->password])) {
             return response()->json([
                 "logged" => "1"
             ], 200);
         }
 
-        return response()->json([
-            "logged" => "0",
-            "message" => "Mauvais identifiants"
-        ], 401);
+        return response()->json([], 401);
     }
 
     /**
      * TESTED
      */
     public function signin(SigninRequest $r){
-        User::create([
-            "name" => $r->name,
-            "email" => $r->email,
-            "password" => Hash::make($r->password)
-        ]);
+        // User::create([
+        //     "name" => $r->name,
+        //     "email" => $r->email,
+        //     "password" => Hash::make($r->password)
+        // ]);
 
         return response()->json([
             "error" => "0",
@@ -60,9 +55,7 @@ class JADBudgetController extends Controller {
      * TESTED
      */
     public function dashboard(Request $r){
-        return view('JADBudget.dashboard', [
-            'path' => (str_contains(env('APP_URL'), "localhost") ? "storage/" : "public/storage/")
-        ]);
+        return view('JADBudgetV2.dashboard');
     }
 
     /**

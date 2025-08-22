@@ -13,7 +13,7 @@
             <a href="#" @click.prevent="$emit('toggle-signin')">Inscrivez-vous</a>
         </div>
         
-        <Button class="w-full" :class="{'loading-state': loading}" label="Se connecter" @click="login"></Button>
+        <Button class="w-full" :class="{'loading-state': loading}" label="Se connecter" :disabled="loading" @click="login"></Button>
 
     </div>
 </template>
@@ -83,23 +83,27 @@ export default {
     methods: {
         async login() {
             this.loading = true;
+
+            const data = {
+                _token: document.querySelector('meta[name=_token]').getAttribute('content'),
+                login: this.credentials.login,
+                password: this.credentials.password
+            };
+
+            const url = '/JADBudget/login';
+
             try {
-                const result = await fetch_result('/JADBudget/login', {
-                    _token: document.querySelector('meta[name=_token]').getAttribute('content'),
-                    login: this.credentials.login,
-                    password: this.credentials.password
-                });
-    
-                switch(result.status){
-                    case 200:
-                        makeToast("success.png", "Connexion avec succès", 1500, (() => { window.location.href = '/JADBudgetV2/dashboard' }));
-                        break;
-                    default:
-                        makeToast("error.png", "Nous n'avons pas pu vous identifier.");
-                }
+                const result = await fetch_result(url, data);
+                makeToast("success.png", "Connexion réussie !", 1500, () => { window.location.href = "/JADBudgetV2/dashboard" });
+
             } catch (error) {
-                console.error("Fetch failed:", error);
-                makeToast("error.png", "Une erreur est survenue. Veuillez réessayer.");
+                if (error.errors) {
+                    const firstError = Object.values(error.errors)[0][0];
+                    makeToast("error.png", firstError);
+                } 
+                else {
+                    makeToast("error.png", "Identifiants invalides, veuillez réessayer.");
+                }
             } finally {
                 this.loading = false;
             }

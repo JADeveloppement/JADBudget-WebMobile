@@ -9,6 +9,7 @@ use App\Providers\RouteServiceProvider;
 
 use App\Http\Middleware\JADBudgetAuthenticate;
 use App\Models\User;
+use App\Http\Requests\SigninRequest;
 
 // JADeveloppemet 
 
@@ -34,38 +35,18 @@ Route::post('/JADBudget/login', [JADBudgetController::class, "login"])->middlewa
 Route::post('/JADBudget/signin', [JADBudgetController::class, "signin"])->middleware('throttle:signin_attempts');
 
 // JADBudgetV2
-Route::get('/JADBudgetV2', function(){
-    return view('JADBudgetV2.index');
+Route::view('/JADBudgetV2', 'JADBudgetV2.index');
+
+Route::controller(JADBudgetController::class)->group(function(){
+    Route::post('/JADBudgetV2/loginV2', "index");
+    Route::post('/JADBudgetV2/signinV2', "signin");
+    Route::get('/JADBudgetV2/disconnect', "disconnect");
+    Route::get('/JADBudgetV2/logout', "disconnect");
 });
 
-Route::post('/JADBudgetV2/loginV2', function(Request $r){
-    if (Auth::attempt(["name" => $r->login, "password" => $r->password]))
-        return response()->json([
-            "action" => "login"
-        ], 200);
-    else return response()->json([], 401);
-});
-
-Route::get('/JADBudgetV2/dashboard', function(){
-    if (!Auth::check()) return redirect('/JADBudgetV2');
-    return view('JADBudgetV2.dashboard', [
-        "username" => (User::where('id', Auth::id())->first())->name
-    ]);
-});
-
-Route::post('/JADBudgetV2/getUserInfos', function(){
-    $user = Auth::user();
-    return response()->json([
-        "login" => $user->name,
-        "email" => $user->email
-    ], 200);
-});
-
-Route::post('/JADBudgetV2/signinV2', function(Request $r){
-    return response()->json([
-        "login" => $r->login,
-        "email" => $r->email,
-        "password" => $r->password,
-        "action" => "signin"
-    ], 200);
+Route::middleware([JADBudgetAuthenticate::class])->group(function(){
+    Route::controller(JADBudgetController::class)->group(function(){
+        Route::get('/JADBudgetV2/dashboard', 'dashboard');
+        Route::get('/JADBudgetV2/getUserInfos', 'getUserInfos');
+    });
 });
