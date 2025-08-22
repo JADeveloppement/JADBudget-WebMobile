@@ -37,11 +37,11 @@ class JADBudgetController extends Controller {
      * TESTED
      */
     public function signin(SigninRequest $r){
-        // User::create([
-        //     "name" => $r->name,
-        //     "email" => $r->email,
-        //     "password" => Hash::make($r->password)
-        // ]);
+        User::create([
+            "name" => $r->name,
+            "email" => $r->email,
+            "password" => Hash::make($r->password)
+        ]);
 
         return response()->json([
             "error" => "0",
