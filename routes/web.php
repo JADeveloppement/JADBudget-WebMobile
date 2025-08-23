@@ -48,5 +48,6 @@ Route::middleware([JADBudgetAuthenticate::class])->group(function(){
     Route::controller(JADBudgetController::class)->group(function(){
         Route::get('/JADBudgetV2/dashboard', 'dashboard');
         Route::post('/JADBudgetV2/getUserInfos', 'getUserInfos');
+        Route::post('/JADBudgetV2/getTransactionsByType', 'getTransactionByType');
     });
 });

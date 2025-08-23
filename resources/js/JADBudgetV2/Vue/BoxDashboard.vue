@@ -1,6 +1,8 @@
 <template>
-    <Box label="Tableau de bord"></Box>
-    <BoxTransactionContainer></BoxTransactionContainer>
+    <div class="dashboardContainer">
+        <Box label="Tableau de bord"></Box>
+        <BoxTransactionContainer></BoxTransactionContainer>
+    </div>
 </template>
 
 <script>

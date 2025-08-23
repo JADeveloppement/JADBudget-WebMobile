@@ -7,17 +7,11 @@
             <div v-if="items && items.length > 0">
                 <ul>
                     <li class="transactionItem" v-for="(item, index) in items" :key="index" :data-id="item[0]">
-                        <!-- <div class="loadingTransactionItem">
-                            <Spinner></Spinner>
-                        </div> -->
-                            <div class="label">
-                                {{ item[1].length > 10 ? item[1].substring(0, 8) + "..." : item[1] }}
-                            </div>
-                            <div class="amount">
-                                {{ item[2] }} €
-                            </div>
-                        <div class="deleteTransaction img-sm" :dataId="item[0]">
-                            <img src="/storage/JADBudget/trash.png" alt="">
+                        <div class="label">
+                            {{ item[1] }}
+                        </div>
+                        <div class="amount">
+                            {{ item[2] }} €
                         </div>
                     </li>
                 </ul>

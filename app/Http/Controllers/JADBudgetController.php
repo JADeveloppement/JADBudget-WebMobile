@@ -106,6 +106,21 @@ class JADBudgetController extends Controller {
         ], 200);
     }
 
+    /** TODO - Make a test */
+    public function getTransactionByType(Request $r){
+        $user = Auth::user();
+        $transactions = Transaction::where('user_id', $user->id)->where('type', $r->type)->get();
+        $transactionList = [];
+
+        foreach($transactions as $e){
+            array_push($transactionList, [$e->id, $e->label, $e->amount]);
+        }
+
+        return response()->json([
+            "transactionList" => $transactionList
+        ], 200);
+    }
+
     /**
      * TESTED
      */

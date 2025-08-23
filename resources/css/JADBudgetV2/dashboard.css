@@ -5,7 +5,11 @@
         @apply w-full h-full flex flex-row ;
 
         .pannelLeft {
-            @apply w-1/5 h-full p-2 bg-white transition-all ;
+            @apply w-fit md:w-1/5 h-full p-2 bg-white transition-all ;
+
+            .welcomeDashboard {
+                @apply hidden md:block ;
+            }
 
             .menuLink {
                 @apply w-full p-1 my-2 rounded-md cursor-pointer transition-all flex flex-row ;
@@ -17,6 +21,14 @@
                 &:hover {
                     @apply bg-jadbudget-blue text-white ;
                 }
+
+                p {
+                    @apply hidden md:block ;
+                }
+
+                &:nth-child(3) {
+                    @apply hidden md:flex ;
+                }
             }
 
             .active {
@@ -25,7 +37,7 @@
         }
 
         .pannelRight {
-            @apply w-4/5 h-full p-2 ;
+            @apply w-full md:w-4/5 h-full p-2 overflow-auto ;
 
             .transactionsContainer {
                 @apply grid grid-cols-1 md:grid-cols-3 gap-4 items-center ;
@@ -41,14 +53,14 @@
                         @apply h-full w-full rounded-b-md p-1 overflow-auto ;
                         
                         .transactionItem {
-                            @apply flex flex-row justify-between p-1 my-1 rounded-md cursor-pointer transition-all ;
+                            @apply flex flex-col justify-between p-1 my-1 rounded-md cursor-pointer transition-all w-full ;
 
                             &:hover {
                                 @apply bg-jadbudget-blue text-white ;
                             }
 
-                            .deleteTransaction {
-                                @apply cursor-pointer ;
+                            .amount {
+                                @apply text-[0.8rem] italic ;
                             }
                         }
                     }
