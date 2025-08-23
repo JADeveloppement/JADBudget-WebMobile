@@ -26,6 +26,34 @@
 
         .pannelRight {
             @apply w-4/5 h-full p-2 ;
+
+            .transactionsContainer {
+                @apply grid grid-cols-1 md:grid-cols-3 gap-4 items-center ;
+
+                .box {
+                    @apply m-6 h-[200px] p-0 ;
+
+                    .title {
+                        @apply bg-jadbudget-blue text-white font-bold text-lg w-full text-center rounded-t-md p-1 ;
+                    }
+
+                    .content {
+                        @apply h-full w-full rounded-b-md p-1 overflow-auto ;
+                        
+                        .transactionItem {
+                            @apply flex flex-row justify-between p-1 my-1 rounded-md cursor-pointer transition-all ;
+
+                            &:hover {
+                                @apply bg-jadbudget-blue text-white ;
+                            }
+
+                            .deleteTransaction {
+                                @apply cursor-pointer ;
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         .pannelReduced {
@@ -43,6 +71,6 @@
     }
 
     .hidden {
-        @apply hidden;
+        display: hidden;
     }
 }

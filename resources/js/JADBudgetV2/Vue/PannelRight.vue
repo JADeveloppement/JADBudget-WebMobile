@@ -1,7 +1,7 @@
 <template>
     <div class="pannelRight">
-        <Box v-if="dashboardActive" label="Tableau de bord"></Box>
-        <Box v-if="!dashboardActive" label="Paramètre du compte"></Box>
+        <BoxDashboard v-if="dashboardActive" label="Tableau de bord"></BoxDashboard>
+        <BoxProfil v-if="!dashboardActive" label="Paramètre du compte"></BoxProfil>
     </div>
 </template>
 <style scoped>
@@ -10,11 +10,12 @@
     }
 </style>
 <script>
-import Box from './Box.vue';
+import BoxDashboard from './BoxDashboard.vue';
+import BoxProfil from './BoxProfil.vue';
 
 export default{
     components: {
-        Box
+        BoxDashboard, BoxProfil
     },
     props: {
         dashboardActive: {
