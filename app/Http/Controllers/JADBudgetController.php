@@ -86,7 +86,7 @@ class JADBudgetController extends Controller {
         Auth::logout();
         $r->session()->invalidate();
         $r->session()->regenerateToken();
-        return redirect('/JADBudget');
+        return redirect('/JADBudgetV2');
     }
 
     /**
