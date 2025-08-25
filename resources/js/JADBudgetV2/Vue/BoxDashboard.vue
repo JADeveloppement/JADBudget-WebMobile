@@ -1,6 +1,6 @@
 <template>
     <div class="dashboardContainer">
-        <Box label="Tableau de bord"></Box>
+        <Box label="Tableau de bord" icon="/storage/JADBudget/dashboard.png" classes="box boxTitle"></Box>
         <BoxTransactionContainer></BoxTransactionContainer>
     </div>
 </template>

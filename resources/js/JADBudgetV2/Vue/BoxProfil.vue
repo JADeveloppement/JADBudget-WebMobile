@@ -1,5 +1,5 @@
 <template>
-    <Box label="Paramètre profile"></Box>
+    <Box label="Profile utilisateur" icon="/storage/JADBudget/user.png" classes="box boxTitle"></Box>
 </template>
 
 <script>
