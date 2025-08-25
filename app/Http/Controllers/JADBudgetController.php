@@ -132,7 +132,7 @@ class JADBudgetController extends Controller {
             "transaction_app_id" => 0,
             "label" => $r->label,
             "amount" => $r->amount,
-            "type" => $r->type
+            "type" => strtoupper($r->type)
         ]);
 
         return response()->json([
@@ -157,7 +157,7 @@ class JADBudgetController extends Controller {
 
         return response()->json([
             "id" => $r->transaction_id,
-            "DB label" => $transaction->label
+            "transaction_label" => $transaction->label
         ], 200);
     }
 

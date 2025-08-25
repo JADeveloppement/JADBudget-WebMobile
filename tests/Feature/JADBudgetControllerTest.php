@@ -196,7 +196,7 @@ describe("JADBudgetController > Datas manipulation", function(){
         $response->assertStatus(200);
         $response->assertJson([
             "id" => $transaction_todelete->id,
-            "DB label" => $transaction_todelete->label
+            "transaction_label" => $transaction_todelete->label
         ]);
 
         $newTransactionsList = Transaction::where('user_id', $user->id)->get();

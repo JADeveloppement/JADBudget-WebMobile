@@ -6,20 +6,7 @@
 </template>
 
 <style scoped>
-    .inputContainer {
-        position: relative;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-    }
 
-    img{
-        position: absolute;
-        right: 0.5rem;
-        cursor: pointer;
-        opacity: 0.5;
-    }
 </style>
 
 <script>
