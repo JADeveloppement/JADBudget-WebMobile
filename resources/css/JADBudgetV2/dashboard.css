@@ -46,21 +46,49 @@
                     @apply m-6 h-[200px] p-0 ;
 
                     .title {
-                        @apply bg-jadbudget-blue text-white font-bold text-lg w-full text-center rounded-t-md p-1 ;
+                        @apply bg-jadbudget-blue text-white font-bold text-lg w-full text-center rounded-t-md p-1 flex flex-row justify-between items-center ;
+
+                        h1 {
+                            @apply text-white text-lg ;
+                        }
+
+                        .nbOfElements {
+                            @apply p-1 bg-blue-600/30 rounded-md text-sm ;
+                        }
                     }
 
                     .content {
                         @apply h-full w-full rounded-b-md p-1 overflow-auto ;
                         
                         .transactionItem {
-                            @apply flex flex-col justify-between p-1 my-1 rounded-md cursor-pointer transition-all w-full ;
+                            @apply flex flex-row justify-between items-center p-1 my-1 rounded-md cursor-pointer transition-all w-full relative ;
+
+                            .transactionAction {
+                                @apply hidden opacity-0 transition-all ;
+                            }
 
                             &:hover {
                                 @apply bg-jadbudget-blue text-white ;
-                            }
 
+                                .transactionAction {
+                                    @apply block opacity-100 transition-all ;
+                                }
+                            }
+                            
                             .amount {
                                 @apply text-[0.8rem] italic ;
+                            }
+                        }
+
+                        .addTransaction {
+                            @apply flex flex-row items-center justify-start text-xs cursor-pointer w-fit mb-1 p-1 rounded-md ;
+
+                            img {
+                                @apply mr-2 ;
+                            }
+
+                            &:hover {
+                                @apply bg-jadbudget-blue text-white ;
                             }
                         }
                     }
@@ -84,5 +112,42 @@
 
     .hidden {
         display: hidden;
+    }
+
+    .loadingSpinner {
+        @apply absolute top-0 left-0 w-full h-full ;
+
+        .spinnerSVGClass{
+            @apply inline w-8 h-8 text-white animate-spin dark:text-white fill-jadbudget-blue ;
+        }
+    }
+
+    .popupContainer {
+        @apply fixed top-0 left-0 w-full h-full bg-black/80 flex flex-col items-center justify-center ;
+
+        .popup {
+            @apply rounded-md shadow-md bg-white w-1/4 ;
+
+            .title {
+                @apply p-2 rounded-t-md bg-jadbudget-blue text-white text-lg font-bold ;
+            }
+
+            .content {
+                @apply p-2 ;
+
+                .warningField > input {
+                    @apply border-solid border-2 border-red-500 ;
+                }
+            }
+
+            .cancelButton {
+                @apply bg-slate-500 mt-[0.5rem] text-white ;
+
+                &:hover {
+                    @apply border-solid border-2 border-slate-500 text-slate-500 bg-white  ;
+                }
+            }
+        }
+
     }
 }

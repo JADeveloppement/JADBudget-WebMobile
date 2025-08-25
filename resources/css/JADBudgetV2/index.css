@@ -27,6 +27,10 @@
         }
     }
 
+    input {
+        @apply border-[1px] border-gray-300 rounded-md my-2 p-1 w-full ;
+    }
+
     .link span {
         @apply text-jadbudget-blue ;
     }
@@ -51,6 +55,10 @@
     
     img {
         @apply object-cover ;
+    }
+
+    .img-xs {
+        @apply w-[16px] ; 
     }
 
     .img-sm {
@@ -87,9 +95,20 @@
         h1 {
             @apply text-2xl font-bold text-jadbudget-blue ;
         }
+    }
 
-        input {
-            @apply border-[1px] border-gray-300 rounded-md my-2 p-1 w-full ;
+    .inputContainer {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+
+        img{
+            position: absolute;
+            right: 0.5rem;
+            cursor: pointer;
+            opacity: 0.5;
         }
     }
 }
