@@ -96,11 +96,11 @@
             }
 
             .infosContainer {
-                @apply grid grid-cols-1 md:grid-cols-2 gap-4 items-center ;
+                @apply grid grid-cols-1 auto-rows-max md:grid-cols-2 gap-4 items-center ;
             }
 
             .usergeneralinfos {
-                @apply mt-8 mb-4 items-start ;
+                @apply mt-8 mb-4 items-start h-full justify-between ;
 
                 h1 {
                     @apply text-left ;
@@ -138,7 +138,7 @@
         @apply fixed top-0 left-0 w-full h-full bg-black/80 flex flex-col items-center justify-center ;
 
         .popup {
-            @apply rounded-md shadow-md bg-white w-1/4 ;
+            @apply rounded-md shadow-md bg-white w-4/5 md:w-1/4 ;
 
             .title {
                 @apply p-2 rounded-t-md bg-jadbudget-blue text-white text-lg font-bold ;

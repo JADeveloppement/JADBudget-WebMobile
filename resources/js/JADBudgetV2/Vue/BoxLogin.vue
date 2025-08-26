@@ -1,5 +1,5 @@
 <template>
-    <div class="box">
+    <div class="box boxLogin">
         <h1>{{ title }}</h1>
 
         <InputField :class="{'loading-state': loading}" name="login" type="text" placeholder="Identifiant" v-model="credentials.login"></InputField>
@@ -19,10 +19,6 @@
 </template>
 
 <style scoped>
-    .box {
-        width: 30%;
-    }
-
     h1 {
         margin-bottom: 2rem;
     }
