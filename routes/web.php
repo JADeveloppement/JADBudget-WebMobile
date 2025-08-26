@@ -24,7 +24,6 @@ Route::middleware([JADBudgetAuthenticate::class])->group(function(){
     Route::get('/JADBudget/profile', [JADBudgetController::class, "profile"]);
     Route::post('/JADBudget/getUserInfos', [JADBudgetController::class, "getUserInfos"]);
     Route::post('/JADBudget/getTransactions', [JADBudgetController::class, "getTransactions"]);
-    Route::post('/JADBudget/updateUserInfos', [JADBudgetController::class, "updateUserInfos"]);
 });
 
 Route::get('/JADBudget', [JADBudgetController::class, "index"]);
@@ -49,5 +48,6 @@ Route::middleware([JADBudgetAuthenticate::class])->group(function(){
         Route::post('/JADBudgetV2/getTransactionsByType', 'getTransactionByType');
         Route::post('/JADBudget/deleteTransaction', [JADBudgetController::class, "deleteTransaction"]);
         Route::post('/JADBudget/addTransaction', [JADBudgetController::class, "addTransaction"]);
+        Route::post('/JADBudgetV2/updateUserInfos', [JADBudgetController::class, "updateUserInfos"]);
     });
 });

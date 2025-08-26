@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Transaction;
 
+use App\Http\Requests\UpdateUserInfosRequest;
 use App\Http\Requests\SigninRequest;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\TransactionRequest;
@@ -161,42 +162,33 @@ class JADBudgetController extends Controller {
         ], 200);
     }
 
-    public function updateUserInfos(Request $r){
+    public function updateUserInfos(UpdateUserInfosRequest $r){
         $user = Auth::user();
 
-        $userToUpdate = Auth::attempt([
-            "name" => $user->name,
-            "password" => $r->password
-        ]);
-
-        if (!$userToUpdate)
+        if (!Hash::check($r->password, $user->password)){
             return response()->json([
-                "updated" => "-1",
                 "message" => "Mauvais mot de passe"
             ], 401);
-        
-        $userEmail = User::where('email', $r->email)->first();
-        $userLogin = User::where('name', $r->login)->first();
+        }
 
-        if ($userEmail && $userEmail->id != $user->id)
+        if ($user->name != $r->name && User::where('name', $r->name)->where('id', '!=', $user->id)->exists())
             return response()->json([
-                "updated" => "-2",
-                "message" => "Vous ne pouvez pas utiliser cette adresse e-mail."
-            ]);
-
-        if ($userLogin && $userLogin->id != $user->id)
-            return response()->json([
-                "updated" => "-3",
-                "message" => "Vous ne pouvez pas utiliser cet idenfiant."
-            ]);
+                "message" => "Vous ne pouvez pas utiliser ce nom d'utilisateur."
+            ], 401);
         
-        $user->name = $r->login;
+        if ($user->email != $r->email && User::where('email', $r->email)->where('id', '!=', $user->id)->exists())
+            return response()->json([
+                "message" => "Vous ne pouvez pas utiliser cet e-mail."
+            ], 401);
+
+        $user->name = $r->name;
         $user->email = $r->email;
-        $user->password = Hash::make($r->password);
         $user->save();
 
         return response()->json([
-            "updated" => "1"
+            "updated" => "1",
+            "username" => $user->name,
+            "useremail" => $user->email
         ], 200);
     }
 }
