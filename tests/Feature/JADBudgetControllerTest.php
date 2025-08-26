@@ -124,6 +124,76 @@ describe('JADBudgetController > Login features', function(){
         $response->assertRedirect('/JADBudgetV2');
     });
 
+    it("update user info if connected", function(){
+        $user = User::create([
+            'name' => 'test',
+            'email' => 'test@mail.com',
+            'password' => Hash::make('123456789')
+        ]);
+
+        $response = $this->actingAs($user)->post('/JADBudgetV2/updateUserInfos', [
+            'name' => 'newTest',
+            'email' => 'newEmail@gmail.com',
+            'password' => '123456789'
+        ]);
+
+        $response->assertStatus(200);
+
+        $this->assertDatabaseHas('users', [
+            'id' => $user->id,
+            'name' => 'newTest',
+            'email' => 'newEmail@gmail.com'
+        ]);
+    });
+
+    it("update password if connected user", function(){
+        $user = User::create([
+            'name' => 'test',
+            'email' => 'test@mail.com',
+            'password' => Hash::make('123456789')
+        ]);
+
+        $response = $this->actingAs($user)->post('/JADBudgetV2/updatePassword', [
+            'oldPassword' => '123456789',
+            'newPassword' => '123456788',
+        ]);
+
+        $response->assertStatus(200);
+
+        $this->assertDatabaseHas('users', [
+            'id' => $user->id,
+            'name' => $user->name,
+            'email' => $user->email,
+        ]);
+
+        expect(Hash::check('123456788', $user->password))->toBe(true);
+    });
+
+    it("does not update user password when not connected", function(){
+        $response = $this->post('/JADBudgetV2/updatePassword', [
+            'oldPassword' => '123456789',
+            'newPassword' => '123456788',
+        ]);
+
+        $response->assertStatus(302);
+    });
+
+    it("update user info if not connected", function(){
+        $user = User::create([
+            'name' => 'test',
+            'email' => 'test@mail.com',
+            'password' => Hash::make('123456789')
+        ]);
+
+        $response = $this->post('/JADBudgetV2/updateUserInfos', [
+            'name' => 'newTest',
+            'email' => 'newEmail@gmail.com',
+            'password' => '123456789'
+        ]);
+
+        $response->assertStatus(302);
+    });
+
     it("correctly log us out", function(){
         $response = $this->get('/JADBudget/disconnect');
         $response->assertStatus(302);

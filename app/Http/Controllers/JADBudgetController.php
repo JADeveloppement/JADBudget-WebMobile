@@ -162,6 +162,9 @@ class JADBudgetController extends Controller {
         ], 200);
     }
 
+    /**
+     * TESTED
+     */
     public function updateUserInfos(UpdateUserInfosRequest $r){
         $user = Auth::user();
 
@@ -192,6 +195,9 @@ class JADBudgetController extends Controller {
         ], 200);
     }
 
+    /**
+     * TESTED
+     */
     public function updatePassword(Request $r){
         $user = Auth::user();
         $password = $r->oldPassword;
