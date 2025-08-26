@@ -191,4 +191,22 @@ class JADBudgetController extends Controller {
             "useremail" => $user->email
         ], 200);
     }
+
+    public function updatePassword(Request $r){
+        $user = Auth::user();
+        $password = $r->oldPassword;
+        $newPassword = Hash::make($r->newPassword);
+
+        if (!Hash::check($password, $user->password))
+            return response()->json([
+                "message" => "L'ancien mot de passe est incorrect"
+            ], 401);
+        
+        $user->password = $newPassword;
+        $user->save();
+        
+        return response()->json([
+            "updated" => "1"
+        ], 200);
+    }
 }

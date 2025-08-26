@@ -49,5 +49,6 @@ Route::middleware([JADBudgetAuthenticate::class])->group(function(){
         Route::post('/JADBudget/deleteTransaction', [JADBudgetController::class, "deleteTransaction"]);
         Route::post('/JADBudget/addTransaction', [JADBudgetController::class, "addTransaction"]);
         Route::post('/JADBudgetV2/updateUserInfos', [JADBudgetController::class, "updateUserInfos"]);
+        Route::post('/JADBudgetV2/updatePassword', [JADBudgetController::class, "updatePassword"]);
     });
 });
