@@ -94,6 +94,18 @@
                     }
                 }
             }
+
+            .infosContainer {
+                @apply grid grid-cols-1 md:grid-cols-2 gap-4 items-center ;
+            }
+
+            .usergeneralinfos {
+                @apply mt-8 mb-4 items-start ;
+
+                h1 {
+                    @apply text-left ;
+                }
+            }
         }
 
         .pannelReduced {
@@ -134,10 +146,6 @@
 
             .content {
                 @apply p-2 ;
-
-                .warningField > input {
-                    @apply border-solid border-2 border-red-500 ;
-                }
             }
 
             .cancelButton {

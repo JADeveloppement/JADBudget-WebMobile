@@ -1,7 +1,7 @@
 <template>
     <div class="pannelRight">
-        <BoxDashboard v-if="dashboardActive" label="Tableau de bord"></BoxDashboard>
-        <BoxProfil v-if="!dashboardActive" label="Paramètre du compte"></BoxProfil>
+        <BoxDashboard v-if="dashboardActive"></BoxDashboard>
+        <BoxProfil v-if="!dashboardActive"></BoxProfil>
     </div>
 </template>
 <style scoped>
