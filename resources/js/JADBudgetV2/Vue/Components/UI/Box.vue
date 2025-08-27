@@ -5,6 +5,18 @@
     </div>
 </template>
 <style>
+    .boxLastLogin {
+        font-size: 0.8rem;
+        font-style: italic;
+        margin-top: 1.5rem;
+        width: fit-content;
+        text-align: left;
+    }
+
+    .boxLastLogin > span {
+        width: fit-content;
+        text-align: left;
+    }
     .boxTitle {
         display: flex;
         flex-direction: row;

@@ -80,6 +80,12 @@ class JADBudgetController extends Controller {
         ], 200);
     }
 
+    public function getLastConnectionTime(Request $r){
+        return response()->json([
+            "lastLoginTime" => Auth::user()->last_login_at->diffForHumans()
+        ], 200);
+    }
+
     /**
      * TESTED
      */

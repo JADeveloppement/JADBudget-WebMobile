@@ -32,6 +32,7 @@ Route::middleware([JADBudgetAuthenticate::class])->group(function(){
     Route::controller(JADBudgetController::class)->group(function(){
         Route::get('/JADBudgetV2/dashboard', 'dashboard');
         Route::post('/JADBudgetV2/getUserInfos', 'getUserInfos');
+        Route::post('/JADBudgetV2/getLastConnectionTime', 'getLastConnectionTime');
         Route::post('/JADBudgetV2/getTransactionsByType', 'getTransactionByType');
         Route::post('/JADBudget/deleteTransaction', [JADBudgetController::class, "deleteTransaction"]);
         Route::post('/JADBudget/addTransaction', [JADBudgetController::class, "addTransaction"]);
