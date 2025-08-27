@@ -1,9 +1,8 @@
 <template>
-    <div class="box boxSignin">
+    <div class="box boxLogin">
         <h1>{{ title }}</h1>
 
         <InputField :class="{'loading-state': loading}" name="login" type="text" placeholder="Identifiant" v-model="credentials.login"></InputField>
-        <InputField :class="{'loading-state': loading}" name="email" type="email" placeholder="E-mail" v-model="credentials.email"></InputField>
         <InputField :class="{'loading-state': loading}" name="password" type="password" placeholder="Mot de passe" :toggle-type="true" v-model="credentials.password"></InputField>
 
         <div class="link">
@@ -11,15 +10,15 @@
             <span>•</span>
             <a href="#">Mentions légales</a>
             <span>•</span>
-            <a href="#" @click.prevent="$emit('toggle-signin')">Connectez-vous</a>
+            <a href="#" @click.prevent="$emit('toggle-signin')">Inscrivez-vous</a>
         </div>
-
-        <Button class="w-full" :class="{'loading-state': loading}" label="S'inscrire" :disabled="loading" @click="signin"></Button>
+        
+        <Button class="w-full" :class="{'loading-state': loading}" label="Se connecter" :disabled="loading" @click="login"></Button>
 
     </div>
 </template>
 
-<style>
+<style scoped>
     h1 {
         margin-bottom: 2rem;
     }
@@ -50,14 +49,16 @@
 </style>
 
 <script>
-import InputField from './InputField.vue';
-import Button from './Button.vue';
-import { fetch_result, makeToast } from '../../utils.ts';
+import InputField from './../Forms/InputField.vue';
+import Button from './../Buttons/Button.vue';
+import Separator from './../UI/Separator.vue';
+import { fetch_result, makeToast } from '../../../../utils.ts';
 
 export default {
     components: {
         InputField,
-        Button
+        Button,
+        Separator
     },
     props: {
         title: {
@@ -71,44 +72,34 @@ export default {
             loading: false,
             credentials: {
                 login: '',
-                email: '',
                 password: ''
             }
         }
     },
     methods: {
-        async signin() {
+        async login() {
             this.loading = true;
-            
+
             const data = {
                 _token: document.querySelector('meta[name=_token]').getAttribute('content'),
-                name: this.credentials.login,
-                email: this.credentials.email,
+                login: this.credentials.login,
                 password: this.credentials.password
             };
 
-            const url = '/JADBudgetV2/signinV2';
+            const url = '/JADBudget/login';
 
             try {
-                await fetch_result(url, data);
-                makeToast("success.png", "Inscription réussie !");
-                
-            } catch (error) {
-                try {
-                    const errorResponse = JSON.parse(error.message);
-                    
-                    if (errorResponse.errors) {
-                        const firstError = Object.values(errorResponse.errors)[0][0];
-                        makeToast("error.png", firstError);
-                    } else {
-                        makeToast("error.png", "Une erreur est survenue. Veuillez réessayer.");
-                    }
+                const result = await fetch_result(url, data);
+                makeToast("success.png", "Connexion réussie !", 1500, () => { window.location.href = "/JADBudgetV2/dashboard" });
 
-                } catch (parseError) {
-                    console.log(parseError);
-                    makeToast("error.png", "Une erreur est survenue. Veuillez réessayer.");
+            } catch (error) {
+                if (error.errors) {
+                    const firstError = Object.values(error.errors)[0][0];
+                    makeToast("error.png", firstError);
+                } 
+                else {
+                    makeToast("error.png", "Identifiants invalides, veuillez réessayer.");
                 }
-                
             } finally {
                 this.loading = false;
             }

@@ -15,10 +15,10 @@
 <style scoped>
 </style>
 <script>
-import { fetch_result, makeToast } from '../../utils.ts';
-import Button from './Button.vue';
-import InputField from './InputField.vue';
-import CheckboxField from './CheckboxField.vue';
+import { fetch_result, makeToast } from '../../../../utils.ts';
+import Button from '../Buttons/Button.vue';
+import InputField from '../Forms/InputField.vue';
+import CheckboxField from '../Forms/CheckboxField.vue';
 
 export default{
     components: {

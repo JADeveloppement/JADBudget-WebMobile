@@ -10,8 +10,8 @@
     }
 </style>
 <script>
-import BoxDashboard from './BoxDashboard.vue';
-import BoxProfil from './BoxProfil.vue';
+import BoxDashboard from '../Components/UI/BoxDashboard.vue';
+import BoxProfil from './../Components/UI/BoxProfil.vue';
 
 export default{
     components: {
@@ -28,6 +28,7 @@ export default{
         }
     },
     mounted(){
+        console.log('PannelRight.vue mounted');
 
     },
     methods: {

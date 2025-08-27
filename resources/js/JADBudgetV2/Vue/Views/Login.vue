@@ -4,8 +4,8 @@
 </template>
 
 <script>
-import BoxLogin from './BoxLogin.vue';
-import BoxSignin from './BoxSignin.vue';
+import BoxLogin from './../Components/UI/BoxLogin.vue';
+import BoxSignin from './../Components/UI/BoxSignin.vue';
 
 export default {
     components: {

@@ -8,8 +8,8 @@
 
 <script>
 import Box from './Box.vue';
-import UserGeneralInfos from './UserGeneralInfos.vue';
-import UserPasswordInfos from './UserPasswordInfos.vue';
+import UserGeneralInfos from '../Users/UserGeneralInfos.vue';
+import UserPasswordInfos from '../Users/UserPasswordInfos.vue';
 
 export default {
     components: {

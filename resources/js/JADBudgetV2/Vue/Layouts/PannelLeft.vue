@@ -22,9 +22,10 @@
     }
 </style>
 <script>
-import Separator from './Separator.vue';
-import MenuLink from './MenuLink.vue';
-import { fetch_result, makeToast } from '../../utils.ts';
+import Separator from '../Components/UI/Separator.vue';
+import MenuLink from '../Components/UI/MenuLink.vue';
+
+import { fetch_result, makeToast } from '../../../utils.ts';
 
 export default{
     components: {

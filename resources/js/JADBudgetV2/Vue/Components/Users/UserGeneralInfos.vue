@@ -13,9 +13,9 @@
 <style scoped>
 </style>
 <script>
-import Button from './Button.vue';
-import InputField from './InputField.vue';
-import { fetch_result, makeToast } from '../../utils.ts';
+import Button from '../Buttons/Button.vue';
+import InputField from '../Forms/InputField.vue';
+import { fetch_result, makeToast } from '../../../../utils.ts';
 
 export default{
     components: {

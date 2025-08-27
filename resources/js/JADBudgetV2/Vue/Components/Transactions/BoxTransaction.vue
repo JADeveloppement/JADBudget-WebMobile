@@ -31,13 +31,12 @@
     </div>
 </template>
 <script>
-import { fetch_result, makeToast } from '../../utils.ts';
-import Spinner from './Spinner.vue';
-import ButtonAddTransaction from './ButtonAddTransaction.vue';
+import { fetch_result, makeToast } from '../../../../utils.ts';
+import ButtonAddTransaction from '../Buttons/ButtonAddTransaction.vue';
 
 export default {
     components: {
-        Spinner, ButtonAddTransaction
+        ButtonAddTransaction
     },
     props: {
         title: {

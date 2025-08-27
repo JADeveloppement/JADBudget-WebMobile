@@ -7,7 +7,7 @@
 
 <script>
 import Box from './Box.vue';
-import BoxTransactionContainer from './BoxTransactionContainer.vue';
+import BoxTransactionContainer from './../Transactions/BoxTransactionContainer.vue';
 
 export default {
     components: {

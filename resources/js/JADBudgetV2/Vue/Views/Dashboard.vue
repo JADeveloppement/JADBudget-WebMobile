@@ -4,8 +4,8 @@
 </template>
 
 <script>
-import PannelLeft from './PannelLeft.vue';
-import PannelRight from './PannelRight.vue';
+import PannelLeft from '../Layouts/PannelLeft.vue';
+import PannelRight from '../Layouts/PannelRight.vue';
 
 export default{
     components: {

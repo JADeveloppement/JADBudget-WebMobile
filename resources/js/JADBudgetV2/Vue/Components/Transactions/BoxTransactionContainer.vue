@@ -8,12 +8,10 @@
 
     <Popup v-if="this.transactionToAdd !== 'undefined'" :action="'add'" :type="transactionToAdd" @save-transaction="saveTransaction($event)" @close-popup="this.transactionToAdd = 'undefined'" ref="popup"></Popup>
 </template>
-<style scoped>
-</style>
 <script>
-import { fetch_result, makeToast } from '../../utils.ts';
+import { fetch_result, makeToast } from '../../../../utils.ts';
 import BoxTransaction from './BoxTransaction.vue';
-import Popup from './Popup.vue';
+import Popup from '../Forms/Popup.vue';
 
 export default {
     components: {
