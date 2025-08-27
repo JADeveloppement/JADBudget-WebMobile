@@ -7,7 +7,7 @@
     }
 
     body {
-        @apply p-0 h-[100vh] ;
+        @apply p-0 h-[100vh] overflow-hidden ;
         background-image: url('/storage/JADBudgetBackground.jpg');
         background-size: cover;
         background-attachment: fixed;
