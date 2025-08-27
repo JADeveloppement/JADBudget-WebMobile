@@ -7,6 +7,9 @@ use Database\Seeders\JADBudgetTestSeeder;
 use App\Models\User;
 use App\Models\Transaction;
 
+use Illuminate\Support\Facades\Event;
+use Illuminate\Auth\Events\Login;
+
 use Illuminate\Support\Facades\Log;
 
 uses(RefreshDatabase::class);
@@ -27,6 +30,24 @@ describe('JADBudgetController > Login features', function(){
         ]);
         
         $this->assertAuthenticatedAs($user);
+    });
+
+    it('stores the last successful login datetime', function(){
+        Event::fake();
+        $this->seed(JADBudgetTestSeeder::class);
+        $user = User::where('name', 'jalal')->first();
+
+        $response = $this->post('/JADBudget/login', [
+            'login' => $user->name,
+            'password' => '12345678'
+        ]);
+
+        $response->assertStatus(200);
+        Event::assertDispatched(Login::class, 1);
+
+        Event::assertDispatched(function (Login $event) use ($user) {
+            return $event->user->is($user) && $event->guard === 'web';
+        });
     });
 
     it("doesn't log in with bad credentials", function($login, $password, $status){
@@ -171,7 +192,7 @@ describe('JADBudgetController > Login features', function(){
         $response->assertStatus(302);
         $response->assertRedirect('/JADBudgetV2');
     });
-})->only();
+});
 
 describe("JADBudgetController > Datas manipulation", function(){
     it("correctly fetches data when logged in", function($type, $numberOfElements){

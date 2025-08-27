@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Auth\Events\Login;
 
 use App\Models\User;
 use App\Models\Transaction;
@@ -27,7 +26,6 @@ class JADBudgetController extends Controller {
      */
     public function login(LoginRequest $r){
         if (Auth::attempt(["name" => $r->login, "password" => $r->password])) {
-            event(new Login(Auth::getDefaultDriver(), Auth::user(), $remember = false));
             return response()->json([
                 "logged" => "1"
             ], 200);
