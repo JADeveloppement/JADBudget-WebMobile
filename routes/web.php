@@ -18,27 +18,14 @@ Route::get('/', function(){
     return redirect('/JADBudgetV2');
 });
 
-// JADBudget
-Route::middleware([JADBudgetAuthenticate::class])->group(function(){
-    Route::get('/JADBudget/dashboard', [JADBudgetController::class, "dashboard"]);
-    Route::get('/JADBudget/profile', [JADBudgetController::class, "profile"]);
-    Route::post('/JADBudget/getUserInfos', [JADBudgetController::class, "getUserInfos"]);
-    Route::post('/JADBudget/getTransactions', [JADBudgetController::class, "getTransactions"]);
-});
-
-Route::get('/JADBudget', [JADBudgetController::class, "index"]);
-Route::get('/JADBudget/disconnect', [JADBudgetController::class, "disconnect"]);
-Route::post('/JADBudget/login', [JADBudgetController::class, "login"])->middleware('throttle:login_attempts');
-Route::post('/JADBudget/signin', [JADBudgetController::class, "signin"])->middleware('throttle:signin_attempts');
-
 // JADBudgetV2
 Route::view('/JADBudgetV2', 'JADBudgetV2.index');
 
 Route::controller(JADBudgetController::class)->group(function(){
-    Route::post('/JADBudgetV2/loginV2', "index");
-    Route::post('/JADBudgetV2/signinV2', "signin");
+    Route::post('/JADBudgetV2/signinV2', "signin")->middleware('throttle:signin_attempts');;
     Route::get('/JADBudgetV2/disconnect', "disconnect");
     Route::get('/JADBudgetV2/logout', "disconnect");
+    Route::post('/JADBudget/login', "login")->middleware('throttle:login_attempts');
 });
 
 Route::middleware([JADBudgetAuthenticate::class])->group(function(){
