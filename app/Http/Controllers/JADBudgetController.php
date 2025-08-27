@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Auth\Events\Login;
 
 use App\Models\User;
 use App\Models\Transaction;
@@ -26,6 +27,7 @@ class JADBudgetController extends Controller {
      */
     public function login(LoginRequest $r){
         if (Auth::attempt(["name" => $r->login, "password" => $r->password])) {
+            event(new Login(Auth::getDefaultDriver(), Auth::user(), $remember = false));
             return response()->json([
                 "logged" => "1"
             ], 200);
@@ -90,24 +92,7 @@ class JADBudgetController extends Controller {
         return redirect('/JADBudgetV2');
     }
 
-    /**
-     * TESTED
-     */
-    public function getTransactions(Request $r){
-        $user = Auth::user();
-        $transactions = Transaction::where('user_id', $user->id)->get();
-        $transactionList = [];
-        foreach($transactions as $e){
-            array_push($transactionList, [$e->id, $e->label, $e->amount, $e->type]);
-        }
-
-        return response()->json([
-            "user_id" => $user->id,
-            "transactionList" => $transactionList
-        ], 200);
-    }
-
-    /** TODO - Make a test */
+    /** TESTED */
     public function getTransactionByType(Request $r){
         $user = Auth::user();
         $transactions = Transaction::where('user_id', $user->id)->where('type', $r->type)->get();
