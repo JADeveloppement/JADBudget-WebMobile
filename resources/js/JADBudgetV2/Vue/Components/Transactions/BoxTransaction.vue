@@ -28,6 +28,9 @@
                 </ul>
             </div>
         </div>
+        <div v-if="totalAmount != 0" class="totalOfBox">
+            Total : {{ totalAmount }} €
+        </div>
     </div>
 </template>
 <script>
@@ -58,11 +61,21 @@ export default {
         }
     },
     data(){
-        return {};
+        return {
+            totalAmount: 0
+        };
     },
     mounted(){
     },
     emits: ['delete-item', 'addTransaction'],
+    watch: {
+        items: {
+            handler(newItems){
+                this.calculateTotal(newItems);
+            },
+            setImmediate: true
+        }
+    },
     methods: {
         async deleteTransaction(transactionToDelete) {
             const data = {
@@ -83,6 +96,13 @@ export default {
         },
         addTransaction(){
             this.$emit('addTransaction', this.transactionType);
+        },
+        calculateTotal(items) {
+            let total = 0;
+            if (items && items.length > 0) {
+                total = items.reduce((sum, item) => sum + parseFloat(item[2]), 0);
+            }
+            this.totalAmount = Math.round(total * 100) / 100;
         }
     }
 }
