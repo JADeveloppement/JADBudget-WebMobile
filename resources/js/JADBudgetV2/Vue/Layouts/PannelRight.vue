@@ -28,7 +28,6 @@ export default{
         }
     },
     mounted(){
-        console.log('PannelRight.vue mounted');
 
     },
     methods: {

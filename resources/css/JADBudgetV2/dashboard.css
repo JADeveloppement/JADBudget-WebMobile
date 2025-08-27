@@ -38,7 +38,7 @@
         }
 
         .pannelRight {
-            @apply w-full md:w-4/5 min-h-[100vh] p-2 bg-yellow-500 overflow-auto pb-[150px] ;
+            @apply w-full md:w-4/5 min-h-[100vh] p-2 overflow-auto pb-[150px] ;
 
             .transactionsContainer {
                 @apply grid grid-cols-1 md:grid-cols-3 gap-4 items-center ;
