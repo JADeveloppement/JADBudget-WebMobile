@@ -6,6 +6,8 @@
         <InputField name="newPassword" type="password" placeholder="Nouveau mot de passe" :toggle-type="true" v-model="this.passwords.newPassword" :class="{'warningField' : submitted & !this.passwords.newPassword.length}"></InputField>
         <InputField name="confirmPassword" type="password" placeholder="Confirmer le nouveau mot de passe" :toggle-type="true" v-model="this.passwords.confirmPassword" :class="{'warningField' : submitted & !this.passwords.confirmPassword.length}"></InputField>
 
+        <CheckboxField label="Se déconnecter après le changement" v-model="logoutwhensaved"></CheckboxField>
+
         <Button label="Sauvegarder" @click="saveNewPassword"></Button>
     </div>
 </template>
@@ -16,10 +18,11 @@
 import { fetch_result, makeToast } from '../../utils.ts';
 import Button from './Button.vue';
 import InputField from './InputField.vue';
+import CheckboxField from './CheckboxField.vue';
 
 export default{
     components: {
-        InputField, Button
+        InputField, Button, CheckboxField
     },
     props: {
 
@@ -27,6 +30,7 @@ export default{
     data(){
         return {
             submitted: false,
+            logoutwhensaved: false,
             passwords: {
                 oldPassword: '',
                 newPassword: '',
@@ -54,10 +58,11 @@ export default{
                 };
 
                 const url = '/JADBudgetV2/updatePassword';
-
+                console.log('logout : ', this.logoutwhensaved);
                 try {
                     await fetch_result(url, data);
                     makeToast('success.png', 'Le mot de passe a été modifié avec succès', 3000);
+                    if (this.logoutwhensaved) window.location.href = "/JADBudgetV2/logout";
                 } catch(error){
                     try {
                         const errorMessage = JSON.parse(error.message);
