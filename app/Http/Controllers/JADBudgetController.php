@@ -9,33 +9,29 @@ use Illuminate\Support\Facades\Auth;
 
 use App\Models\User;
 use App\Models\Transaction;
+
+use App\Http\Requests\UpdateUserInfosRequest;
 use App\Http\Requests\SigninRequest;
+use App\Http\Requests\LoginRequest;
 use App\Http\Requests\TransactionRequest;
 
 class JADBudgetController extends Controller {
 
     public function index(){
-        return view('JADBudget.index', [
-            'path' => (str_contains(env('APP_URL'), "localhost") ? "storage/" : "public/storage/")
-            // 'path' => 'storage/'
-        ]);
+        return view('JADBudgetV2.index');
     }
 
-    
     /**
      * TESTED
      */
-    public function login(Request $r){
+    public function login(LoginRequest $r){
         if (Auth::attempt(["name" => $r->login, "password" => $r->password])) {
             return response()->json([
                 "logged" => "1"
             ], 200);
         }
 
-        return response()->json([
-            "logged" => "0",
-            "message" => "Mauvais identifiants"
-        ], 401);
+        return response()->json([], 401);
     }
 
     /**
@@ -60,9 +56,7 @@ class JADBudgetController extends Controller {
      * TESTED
      */
     public function dashboard(Request $r){
-        return view('JADBudget.dashboard', [
-            'path' => (str_contains(env('APP_URL'), "localhost") ? "storage/" : "public/storage/")
-        ]);
+        return view('JADBudgetV2.dashboard');
     }
 
     /**
@@ -86,6 +80,12 @@ class JADBudgetController extends Controller {
         ], 200);
     }
 
+    public function getLastConnectionTime(Request $r){
+        return response()->json([
+            "lastLoginTime" => Auth::user()->last_login_at->diffForHumans()
+        ], 200);
+    }
+
     /**
      * TESTED
      */
@@ -93,22 +93,20 @@ class JADBudgetController extends Controller {
         Auth::logout();
         $r->session()->invalidate();
         $r->session()->regenerateToken();
-        return redirect('/JADBudget');
+        return redirect('/JADBudgetV2');
     }
 
-    /**
-     * TESTED
-     */
-    public function getTransactions(Request $r){
+    /** TESTED */
+    public function getTransactionByType(Request $r){
         $user = Auth::user();
-        $transactions = Transaction::where('user_id', $user->id)->get();
+        $transactions = Transaction::where('user_id', $user->id)->where('type', $r->type)->get();
         $transactionList = [];
+
         foreach($transactions as $e){
-            array_push($transactionList, [$e->id, $e->label, $e->amount, $e->type]);
+            array_push($transactionList, [$e->id, $e->label, $e->amount]);
         }
 
         return response()->json([
-            "user_id" => $user->id,
             "transactionList" => $transactionList
         ], 200);
     }
@@ -124,7 +122,7 @@ class JADBudgetController extends Controller {
             "transaction_app_id" => 0,
             "label" => $r->label,
             "amount" => $r->amount,
-            "type" => $r->type
+            "type" => strtoupper($r->type)
         ]);
 
         return response()->json([
@@ -149,44 +147,59 @@ class JADBudgetController extends Controller {
 
         return response()->json([
             "id" => $r->transaction_id,
-            "DB label" => $transaction->label
+            "transaction_label" => $transaction->label
         ], 200);
     }
 
-    public function updateUserInfos(Request $r){
+    /**
+     * TESTED
+     */
+    public function updateUserInfos(UpdateUserInfosRequest $r){
         $user = Auth::user();
 
-        $userToUpdate = Auth::attempt([
-            "name" => $user->name,
-            "password" => $r->password
-        ]);
-
-        if (!$userToUpdate)
+        if (!Hash::check($r->password, $user->password)){
             return response()->json([
-                "updated" => "-1",
                 "message" => "Mauvais mot de passe"
             ], 401);
-        
-        $userEmail = User::where('email', $r->email)->first();
-        $userLogin = User::where('name', $r->login)->first();
+        }
 
-        if ($userEmail && $userEmail->id != $user->id)
+        if ($user->name != $r->name && User::where('name', $r->name)->where('id', '!=', $user->id)->exists())
             return response()->json([
-                "updated" => "-2",
-                "message" => "Vous ne pouvez pas utiliser cette adresse e-mail."
-            ]);
-
-        if ($userLogin && $userLogin->id != $user->id)
-            return response()->json([
-                "updated" => "-3",
-                "message" => "Vous ne pouvez pas utiliser cet idenfiant."
-            ]);
+                "message" => "Vous ne pouvez pas utiliser ce nom d'utilisateur."
+            ], 401);
         
-        $user->name = $r->login;
+        if ($user->email != $r->email && User::where('email', $r->email)->where('id', '!=', $user->id)->exists())
+            return response()->json([
+                "message" => "Vous ne pouvez pas utiliser cet e-mail."
+            ], 401);
+
+        $user->name = $r->name;
         $user->email = $r->email;
-        $user->password = Hash::make($r->password);
         $user->save();
 
+        return response()->json([
+            "updated" => "1",
+            "username" => $user->name,
+            "useremail" => $user->email
+        ], 200);
+    }
+
+    /**
+     * TESTED
+     */
+    public function updatePassword(Request $r){
+        $user = Auth::user();
+        $password = $r->oldPassword;
+        $newPassword = Hash::make($r->newPassword);
+
+        if (!Hash::check($password, $user->password))
+            return response()->json([
+                "message" => "L'ancien mot de passe est incorrect"
+            ], 401);
+        
+        $user->password = $newPassword;
+        $user->save();
+        
         return response()->json([
             "updated" => "1"
         ], 200);

@@ -1,7 +1,7 @@
 import { createApp } from "vue";
 
-import Header from "./Vue/Header.vue" ;
-import Toast from "./Vue/Toast.vue";
+import Header from "./Vue/Layouts/Header.vue" ;
+import Toast from "./Vue/Components/UI/Toast.vue";
 
 document.addEventListener('DOMContentLoaded', () => {
     const headerApp = createApp(Header);

@@ -1,5 +1,5 @@
 import { createApp } from 'vue';
-import Login from './Vue/Login.vue';
+import Login from './Vue/Views/Login.vue';
 
 console.log('JADBudgetV2/index.js');
 

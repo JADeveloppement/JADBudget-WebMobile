@@ -1,24 +1,15 @@
 <template>
     <div class="inputContainer">
-        <input :name="name" :type="fieldType" :placeholder="placeholder" :value="modelValue" @input="$emit('update:modelValue', $event.target.value)">
+        <input :name="name" :type="fieldType" :placeholder="placeholder" :value="modelValue" @input="$emit('update:modelValue', $event.target.value)" :readonly="readOnly">
         <img class="img-sm" src="/storage/JADBudget/oeil.png" v-if="toggleType" @click="toggleFieldType">
     </div>
 </template>
 
 <style scoped>
-    .inputContainer {
-        position: relative;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-    }
-
-    img{
-        position: absolute;
-        right: 0.5rem;
-        cursor: pointer;
-        opacity: 0.5;
+    .warningField > input {
+        border-style: solid;
+        border-width: 2px;
+        border-color: #EF4444 !important;
     }
 </style>
 
@@ -38,7 +29,12 @@ export default {
             type: String,
         },
         toggleType: {
-            type: Boolean
+            type: Boolean,
+            default: false
+        },
+        readOnly: {
+            type: Boolean,
+            default: false
         }
     },
     emits: ['update:modelValue'],

@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SigninRequest extends FormRequest
+class LoginRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,8 +22,7 @@ class SigninRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|alpha|min:3|unique:users,name',
-            'email' => 'required|email|min:5|unique:users,email',
+            'login' => 'required|string|alpha|min:3',
             'password' => 'required|string|min:5'
         ];
     }
@@ -31,15 +30,10 @@ class SigninRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'name.required' => 'L\'identifiant ne doit pas être vide.',
-            'email.required' => 'L\'email ne doit pas être vide.',
+            'login.required' => 'L\'identifiant ne doit pas être vide.',
+            'login.alpha' => 'L\'identifiant ne peut contenir que des lettres.',
+            'login.min' => 'L\'identifiant doit contenir au moins :min caractères.',
             'password.required' => 'Le mot de passe ne doit pas être vide.',
-            'name.unique' => 'Identifiant non disponible.',
-            'email.unique' => 'Email non disponible.',
-            'name.alpha' => 'L\'identifiant ne peut contenir que des lettres.',
-            'email.email' => 'Format d\'email invalide.',
-            'name.min' => 'L\'identifiant doit contenir au moins :min caractères.',
-            'email.min' => 'L\'email doit contenir au moins :min caractères.',
             'password.min' => 'Le mot de passe doit contenir au moins :min caractères.'
         ];
     }

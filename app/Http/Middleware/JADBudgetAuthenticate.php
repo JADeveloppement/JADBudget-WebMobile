@@ -18,9 +18,13 @@ class JADBudgetAuthenticate
     public function handle(Request $r, Closure $next): Response
     {
         if (!Auth::check()) {
-            return redirect('/JADBudget', 302, [
-                "error" => "test"
-            ]);
+            if ($r->ajax() || $r->wantsJson()) {
+                return response()->json([
+                    'message' => 'Non authentifié. Identifiants invalides.'
+                ], 401);
+            }
+
+            return redirect('/JADBudgetV2')->with('error', 'Identifiants invalides.');
         }
         
         return $next($r);
