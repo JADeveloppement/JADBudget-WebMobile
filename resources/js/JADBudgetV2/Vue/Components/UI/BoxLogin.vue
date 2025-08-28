@@ -6,9 +6,9 @@
         <InputField :class="{'loading-state': loading}" name="password" type="password" placeholder="Mot de passe" :toggle-type="true" v-model="credentials.password"></InputField>
 
         <div class="link">
-            <a href="#" style="margin-right: 1rem;">Politique de confidentialité</a>
+                <a href="#" style="margin-right: 1rem;" @click.prevent="$emit('displayConfidentialityPolicies')">Politique de confidentialité</a>
             <span>•</span>
-            <a href="#">Mentions légales</a>
+            <a href="#" @click.prevent="$emit('displayLegalMentions')">Mentions légales</a>
             <span>•</span>
             <a href="#" @click.prevent="$emit('toggle-signin')">Inscrivez-vous</a>
         </div>
@@ -49,10 +49,10 @@
 </style>
 
 <script>
-import InputField from './../Forms/InputField.vue';
-import Button from './../Buttons/Button.vue';
-import Separator from './../UI/Separator.vue';
-import { fetch_result, makeToast } from '../../../../utils.ts';
+import InputField from '../Forms/InputField.vue';
+import Button from '../Buttons/Button.vue';
+import Separator from './Separator.vue';
+import { fetch_result, makeToast } from '../../../../utils';
 
 export default {
     components: {
@@ -66,7 +66,7 @@ export default {
             required: true
         }
     },
-    emits: ['toggle-signin'],
+    emits: ['toggle-signin', 'displayLegalMentions', 'displayConfidentialityPolicies'],
     data() {
         return {
             loading: false,
@@ -90,7 +90,8 @@ export default {
 
             try {
                 const result = await fetch_result(url, data);
-                makeToast("success.png", "Connexion réussie !", 1500, () => { window.location.href = "/JADBudgetV2/dashboard" });
+                debugger;
+                makeToast("success.png", "Connexion réussie !", 1500, () => { window.location.href = "/JADBudget/dashboard" });
 
             } catch (error) {
                 if (error.errors) {
@@ -103,6 +104,9 @@ export default {
             } finally {
                 this.loading = false;
             }
+        },
+        displayLegalMentions(){
+            console.log('legal mention')
         }
     }
 }

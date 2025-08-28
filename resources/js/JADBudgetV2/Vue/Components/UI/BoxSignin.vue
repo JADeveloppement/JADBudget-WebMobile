@@ -7,9 +7,9 @@
         <InputField :class="{'loading-state': loading}" name="password" type="password" placeholder="Mot de passe" :toggle-type="true" v-model="credentials.password"></InputField>
 
         <div class="link">
-            <a href="#" style="margin-right: 1rem;">Politique de confidentialité</a>
+            <a href="#" style="margin-right: 1rem;" @click.prevent="$emit('displayConfidentialityPolicies')">Politique de confidentialité</a>
             <span>•</span>
-            <a href="#">Mentions légales</a>
+            <a href="#" @click.prevent="$emit('displayLegalMentions')">Mentions légales</a>
             <span>•</span>
             <a href="#" @click.prevent="$emit('toggle-signin')">Connectez-vous</a>
         </div>
@@ -50,9 +50,9 @@
 </style>
 
 <script>
-import InputField from './../Forms/InputField.vue';
-import Button from './../Buttons/Button.vue';
-import { fetch_result, makeToast } from '../../../../utils.ts';
+import InputField from '../Forms/InputField.vue';
+import Button from '../Buttons/Button.vue';
+import { fetch_result, makeToast } from '../../../../utils';
 
 export default {
     components: {
@@ -65,7 +65,7 @@ export default {
             required: true
         }
     },
-    emits: ['toggle-signin'],
+    emits: ['toggle-signin', 'displayLegalMentions', 'displayConfidentialityPolicies'],
     data() {
         return {
             loading: false,
@@ -87,7 +87,7 @@ export default {
                 password: this.credentials.password
             };
 
-            const url = '/JADBudgetV2/signinV2';
+            const url = '/JADBudget/signinV2';
 
             try {
                 await fetch_result(url, data);
