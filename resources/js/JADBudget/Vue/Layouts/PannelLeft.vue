@@ -59,20 +59,11 @@ export default{
             }
         },
 
-        displayDashboard(){
-            console.log('PannelLeft.vue > displayDashboard()');
-        },
-
-        displayProfile(){
-            console.log('PannelLeft.vue > displayProfile()');
-        },
-
         logoutUser(){
             window.location.href = "/JADBudget/logout";
         },
 
         reduceMenu(){
-            console.log('PannelLeft.vue > reduceMenu()');
             this.isPannelReduce = !this.isPannelReduce;
         }
     }

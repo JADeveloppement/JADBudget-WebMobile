@@ -58,7 +58,6 @@ export default{
                 };
 
                 const url = '/JADBudget/updatePassword';
-                console.log('logout : ', this.logoutwhensaved);
                 try {
                     await fetch_result(url, data);
                     makeToast('success.png', 'Le mot de passe a été modifié avec succès', 3000);

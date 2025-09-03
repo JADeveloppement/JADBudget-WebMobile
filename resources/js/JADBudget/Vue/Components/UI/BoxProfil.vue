@@ -37,7 +37,6 @@ export default {
 
             try {
                 const result = await fetch_result(url, data);
-                console.log(result);
                 return result.lastLoginTime;
             } catch(error){
                 makeToast('warning.png', 'Une erreur est survenue.');

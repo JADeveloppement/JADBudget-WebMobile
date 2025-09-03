@@ -22,11 +22,9 @@ export default{
     },
     methods: {
         dashboardClicked(){
-            console.log('Dashboard.vue > dashboardClicked');
             this.dashboardSelected = true;
         },
         profileClicked(){
-            console.log('Dashboard.vue > profilClicked');
             this.dashboardSelected = false;
         }
     }

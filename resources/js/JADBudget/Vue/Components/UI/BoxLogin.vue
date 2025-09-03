@@ -103,9 +103,6 @@ export default {
             } finally {
                 this.loading = false;
             }
-        },
-        displayLegalMentions(){
-            console.log('legal mention')
         }
     }
 }
