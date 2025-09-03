@@ -11,7 +11,7 @@
 </style>
 <script>
 import BoxDashboard from '../Components/UI/BoxDashboard.vue';
-import BoxProfil from './../Components/UI/BoxProfil.vue';
+import BoxProfil from '../Components/UI/BoxProfil.vue';
 
 export default{
     components: {

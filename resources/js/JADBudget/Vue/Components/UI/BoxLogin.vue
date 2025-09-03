@@ -90,7 +90,6 @@ export default {
 
             try {
                 const result = await fetch_result(url, data);
-                debugger;
                 makeToast("success.png", "Connexion réussie !", 1500, () => { window.location.href = "/JADBudget/dashboard" });
 
             } catch (error) {

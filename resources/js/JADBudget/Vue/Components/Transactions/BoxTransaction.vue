@@ -9,11 +9,11 @@
             <ButtonAddTransaction :transaction-type="this.transactionType" @add-transaction="addTransaction"></ButtonAddTransaction>
             <div style="position: relative" v-if="items && items.length > 0">
                 <ul>
-                    <li class="transactionItem" v-for="(item, index) in items" :key="index" :data-id="item[0]">
+                    <li class="transactionItem" v-for="(item, index) in items" :key="index" :data-id="item.id">
                         <div class="label">
-                            <span>{{ item[1] }}</span>
+                            <span>{{ item.label }}</span>
                             <div class="amount">
-                                {{ item[2] }} €
+                                {{ item.amount }} €
                             </div>
                         </div>
                         <div class="transactionAction" @click="deleteTransaction(item)">
@@ -80,15 +80,15 @@ export default {
         async deleteTransaction(transactionToDelete) {
             const data = {
                 _token: document.querySelector('meta[name=_token]').getAttribute('content'),
-                transaction_id: transactionToDelete[0]
+                transaction_id: transactionToDelete.id
             };
 
             const url = '/JADBudget/deleteTransaction';
 
             try {
                 await fetch_result(url, data);
-                this.$emit('delete-item', transactionToDelete[0]);
-                makeToast('success.png', `Transaction ${transactionToDelete[1]} supprimée avec succès.`);
+                this.$emit('delete-item', transactionToDelete.id);
+                makeToast('success.png', `Transaction ${transactionToDelete.label} supprimée avec succès.`);
             } catch(error){
                 console.log(error);
                 makeToast('warning.png', `Une erreur est survenue, veuillez réessayer.`);
@@ -100,7 +100,7 @@ export default {
         calculateTotal(items) {
             let total = 0;
             if (items && items.length > 0) {
-                total = items.reduce((sum, item) => sum + parseFloat(item[2]), 0);
+                total = items.reduce((sum, item) => sum + parseFloat(item.amount), 0);
             }
             this.totalAmount = Math.round(total * 100) / 100;
         }

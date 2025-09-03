@@ -25,7 +25,7 @@
 import Separator from '../Components/UI/Separator.vue';
 import MenuLink from '../Components/UI/MenuLink.vue';
 
-import { fetch_result, makeToast } from '../../../utils.ts';
+import { fetch_result, makeToast } from '../../../utils';
 
 export default{
     components: {
@@ -48,12 +48,11 @@ export default{
     methods: {
         async fetchInformations(){
             try {
-                const result = await fetch_result('/JADBudgetV2/getUserInfos', {
+                const result = await fetch_result('/JADBudget/getUserInfos', {
                     _token: document.querySelector('meta[name=_token]').getAttribute('content'),
                 });
 
                 this.name = result.userName;
-
             } catch(error){
                 console.log(error);
                 makeToast('error.png', 'Une erreur est survenue. Veuillez réessayer');
@@ -69,7 +68,7 @@ export default{
         },
 
         logoutUser(){
-            window.location.href = "/JADBudgetV2/logout";
+            window.location.href = "/JADBudget/logout";
         },
 
         reduceMenu(){

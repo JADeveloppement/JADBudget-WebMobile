@@ -10,10 +10,10 @@
         border-style: solid;
         border-width: 2px;
         border-color: #EF4444 !important;
-    }
+    } 
 </style>
 
-<script>
+<script> 
 export default {
     props: {
         modelValue: String,

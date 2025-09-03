@@ -18,7 +18,7 @@ use App\Http\Requests\TransactionRequest;
 class JADBudgetController extends Controller {
 
     public function index(){
-        return view('JADBudgetV2.index');
+        return view('JADBudget.index');
     }
 
     /**
@@ -56,7 +56,7 @@ class JADBudgetController extends Controller {
      * TESTED
      */
     public function dashboard(Request $r){
-        return view('JADBudgetV2.dashboard');
+        return view('JADBudget.dashboard');
     }
 
     /**
@@ -93,7 +93,7 @@ class JADBudgetController extends Controller {
         Auth::logout();
         $r->session()->invalidate();
         $r->session()->regenerateToken();
-        return redirect('/JADBudgetV2');
+        return redirect('/JADBudget');
     }
 
     /** TESTED */

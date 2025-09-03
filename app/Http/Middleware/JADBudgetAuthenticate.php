@@ -24,7 +24,7 @@ class JADBudgetAuthenticate
                 ], 401);
             }
 
-            return redirect('/JADBudgetV2')->with('error', 'Identifiants invalides.');
+            return redirect('/JADBudget')->with('error', 'Identifiants invalides.');
         }
         
         return $next($r);

@@ -8,12 +8,13 @@
 <script>
 import BoxLogin from '../Components/UI/BoxLogin.vue';
 import BoxSignin from '../Components/UI/BoxSignin.vue';
-import LegalMentions from '../../../components/LegalMentions.vue';
-import Confidentiality from '../../../components/Confidentiality.vue';
+import LegalMentions from '../Components/UI/LegalMentions.vue';
+import Confidentiality from '../Components/UI/Confidentiality.vue';
 
 export default {
     components: {
-        BoxLogin, BoxSignin, LegalMentions, Confidentiality
+        BoxLogin, BoxSignin, 
+        LegalMentions, Confidentiality
     },
     data(){
         return {

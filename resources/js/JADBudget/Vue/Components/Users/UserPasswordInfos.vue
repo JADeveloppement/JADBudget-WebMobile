@@ -57,12 +57,12 @@ export default{
                     newPassword: this.passwords.newPassword
                 };
 
-                const url = '/JADBudgetV2/updatePassword';
+                const url = '/JADBudget/updatePassword';
                 console.log('logout : ', this.logoutwhensaved);
                 try {
                     await fetch_result(url, data);
                     makeToast('success.png', 'Le mot de passe a été modifié avec succès', 3000);
-                    if (this.logoutwhensaved) window.location.href = "/JADBudgetV2/logout";
+                    if (this.logoutwhensaved) window.location.href = "/JADBudget/logout";
                 } catch(error){
                     try {
                         const errorMessage = JSON.parse(error.message);

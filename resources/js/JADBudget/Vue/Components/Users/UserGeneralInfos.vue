@@ -15,7 +15,7 @@
 <script>
 import Button from '../Buttons/Button.vue';
 import InputField from '../Forms/InputField.vue';
-import { fetch_result, makeToast } from '../../../../utils.ts';
+import { fetch_result, makeToast } from '../../../../utils';
 
 export default{
     components: {
@@ -41,7 +41,7 @@ export default{
     },
     methods: {
         async fetch_userinfos(){
-            const url = '/JADBudgetV2/getUserInfos';
+            const url = '/JADBudget/getUserInfos';
             const data = {
                 _token: document.querySelector('meta[name=_token]').getAttribute('content')
             };
@@ -60,7 +60,7 @@ export default{
         async saveInformations(){
             this.submitted = true;
             if (this.credentials.username.length && this.credentials.email.length && this.credentials.password.length){
-                const url = "/JADBudgetV2/updateUserInfos";
+                const url = "/JADBudget/updateUserInfos";
                 const data = {
                     _token: document.querySelector('meta[name=_token]').getAttribute('content'),
                     name: this.credentials.username,

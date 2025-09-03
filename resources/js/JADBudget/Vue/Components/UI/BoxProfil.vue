@@ -11,7 +11,7 @@
 import Box from './Box.vue';
 import UserGeneralInfos from '../Users/UserGeneralInfos.vue';
 import UserPasswordInfos from '../Users/UserPasswordInfos.vue';
-import { fetch_result, makeToast } from '../../../../utils.ts';
+import { fetch_result, makeToast } from '../../../../utils';
 
 export default {
     components: {
@@ -33,7 +33,7 @@ export default {
                 _token : document.querySelector('meta[name=_token]').getAttribute('content')
             };
 
-            const url = '/JADBudgetV2/getLastConnectionTime';
+            const url = '/JADBudget/getLastConnectionTime';
 
             try {
                 const result = await fetch_result(url, data);

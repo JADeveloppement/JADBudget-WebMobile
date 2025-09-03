@@ -11,7 +11,7 @@
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
-        <script src="{{ mix('js/JADBudgetV2/master.js') }}" defer></script>
+        <script src="{{ mix('js/JADBudget/master.js') }}" defer></script>
         @yield('style')
         @yield('script')
     </head>

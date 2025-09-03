@@ -70,7 +70,7 @@ describe('JADBudgetController > Login features', function(){
     it('sign in', function($name, $email, $password, $statusResponse){
         $this->seed(JADBudgetTestSeeder::class);
 
-        $response = $this->post('/JADBudgetV2/signinV2', [
+        $response = $this->post('/JADBudget/signinV2', [
             'name' => $name,
             'email' => $email,
             'password' => $password
@@ -90,21 +90,21 @@ describe('JADBudgetController > Login features', function(){
     it ('displays dashboard if connected', function(){
         $user = User::factory()->create();
 
-        $response = $this->actingAs($user)->get('/JADBudgetV2/dashboard');
+        $response = $this->actingAs($user)->get('/JADBudget/dashboard');
         
         $response->assertStatus(200);
-        $response->assertViewIs('JADBudgetV2.dashboard');
+        $response->assertViewIs('JADBudget.dashboard');
     });
 
     it ('redirect to index if not connected', function(){
-        $response = $this->get('/JADBudgetV2/dashboard');
-        $response->assertRedirect('/JADBudgetV2');
+        $response = $this->get('/JADBudget/dashboard');
+        $response->assertRedirect('/JADBudget');
     });
 
     it('retrieves user informations', function(){
         $user = User::factory()->create();
         
-        $response = $this->actingAs($user)->post('/JADBudgetV2/getUserInfos');
+        $response = $this->actingAs($user)->post('/JADBudget/getUserInfos');
         $response->assertStatus(200);
         $response->assertJson([
             "userName" => $user->name,
@@ -113,8 +113,8 @@ describe('JADBudgetController > Login features', function(){
     });
 
     it("does not retrieve info if not connected", function(){
-        $response = $this->post('/JADBudgetV2/getUserInfos');
-        $response->assertRedirect('/JADBudgetV2');
+        $response = $this->post('/JADBudget/getUserInfos');
+        $response->assertRedirect('/JADBudget');
     });
 
     it("update user info if connected", function(){
@@ -124,7 +124,7 @@ describe('JADBudgetController > Login features', function(){
             'password' => Hash::make('123456789')
         ]);
 
-        $response = $this->actingAs($user)->post('/JADBudgetV2/updateUserInfos', [
+        $response = $this->actingAs($user)->post('/JADBudget/updateUserInfos', [
             'name' => 'newTest',
             'email' => 'newEmail@gmail.com',
             'password' => '123456789'
@@ -146,7 +146,7 @@ describe('JADBudgetController > Login features', function(){
             'password' => Hash::make('123456789')
         ]);
 
-        $response = $this->actingAs($user)->post('/JADBudgetV2/updatePassword', [
+        $response = $this->actingAs($user)->post('/JADBudget/updatePassword', [
             'oldPassword' => '123456789',
             'newPassword' => '123456788',
         ]);
@@ -163,7 +163,7 @@ describe('JADBudgetController > Login features', function(){
     });
 
     it("does not update user password when not connected", function(){
-        $response = $this->post('/JADBudgetV2/updatePassword', [
+        $response = $this->post('/JADBudget/updatePassword', [
             'oldPassword' => '123456789',
             'newPassword' => '123456788',
         ]);
@@ -178,7 +178,7 @@ describe('JADBudgetController > Login features', function(){
             'password' => Hash::make('123456789')
         ]);
 
-        $response = $this->post('/JADBudgetV2/updateUserInfos', [
+        $response = $this->post('/JADBudget/updateUserInfos', [
             'name' => 'newTest',
             'email' => 'newEmail@gmail.com',
             'password' => '123456789'
@@ -188,9 +188,9 @@ describe('JADBudgetController > Login features', function(){
     });
 
     it("correctly log us out", function(){
-        $response = $this->get('/JADBudgetV2/logout');
+        $response = $this->get('/JADBudget/logout');
         $response->assertStatus(302);
-        $response->assertRedirect('/JADBudgetV2');
+        $response->assertRedirect('/JADBudget');
     });
 });
 
@@ -199,7 +199,7 @@ describe("JADBudgetController > Datas manipulation", function(){
         $this->seed(JADBudgetTestSeeder::class);
         $user = User::where('name', 'jalal')->first();
         
-        $response = $this->actingAs($user)->post('/JADBudgetV2/getTransactionsByType', [
+        $response = $this->actingAs($user)->post('/JADBudget/getTransactionsByType', [
             'type' => $type
         ]);
         $response->assertStatus(200);
@@ -214,8 +214,8 @@ describe("JADBudgetController > Datas manipulation", function(){
     ]);
 
     it("fetches no data when not logged in", function(){
-        $response = $this->post('/JADBudgetV2/getTransactionsByType');
-        $response->assertRedirect("/JADBudgetV2");
+        $response = $this->post('/JADBudget/getTransactionsByType');
+        $response->assertRedirect("/JADBudget");
     });
 
     it("create a transaction", function($label, $amount, $type, $responseStatus){
@@ -249,7 +249,7 @@ describe("JADBudgetController > Datas manipulation", function(){
             "type" => "dummy"
         ]);
 
-        $response->assertRedirect('/JADBudgetV2');
+        $response->assertRedirect('/JADBudget');
     });
 
     it("delete a transaction if logged in", function(){
@@ -279,6 +279,6 @@ describe("JADBudgetController > Datas manipulation", function(){
             'transaction_id' => 'dummyId'
         ]);
 
-        $response->assertRedirect('/JADBudgetV2');
+        $response->assertRedirect('/JADBudget');
     });
 });
